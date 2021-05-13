@@ -1,6 +1,6 @@
 <template>
-  <div class="layout">
-    <el-container class="container">
+  <div class="layout" >
+    <el-container class="container" v-if="showMenu">
       <el-aside class="aside">
         <!--系统名称+logo-->
         <div class="head">
@@ -14,6 +14,7 @@
         <el-menu
             background-color="#222832"
             text-color="#fff"
+            router="true"
         >
           <!--一级栏目-->
           <el-submenu index="1">
@@ -26,6 +27,7 @@
             </el-menu-item-group>
             <el-menu-item-group>
               <el-menu-item index="/"><i class="el-icon-data-line" />首页</el-menu-item>
+              <el-menu-item index="/add"><i class="el-icon-data-line" />添加商品</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -38,18 +40,53 @@
         <Footer />
       </el-container>
     </el-container>
+    <el-container  class="container" v-else>
+      <router-view />
+    </el-container>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import {reactive, toRefs} from 'vue'
+import {useRouter} from 'vue-router'
+import {localGet, pathMap} from '@/utils'
 export default {
   name: 'App',
   components: {
     Header,
     Footer
-},
+  },
+  setup() {
+    const noMenu = ['/login'];
+    const router = useRouter();
+    const state = reactive({
+      showMenu: true
+    });
+
+    router.beforeEach((to, from, next) => {
+      if (to.path == '/login') {
+        // 如果路径是 /login 则正常执行
+        next()
+      } else {
+        // 如果不是 /login，判断是否有 token
+        if (!localGet('token')) {
+          // 如果没有，则跳至登录页面
+          next({path: '/login'})
+        } else {
+          // 否则继续执行
+          next()
+        }
+      }
+      state.showMenu = !noMenu.includes(to.path)
+      document.title = pathMap[to.name]
+    })
+
+    return {
+      ...toRefs(state)
+    }
+  }
 }
 </script>
 
