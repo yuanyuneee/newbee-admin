@@ -1,7 +1,28 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/index'
-import { ElButton, ElContainer, ElMenu, ElAside, ElSubmenu, ElMenuItemGroup, ElMenuItem, ElForm, ElFormItem, ElInput, ElCheckbox } from 'element-plus'
+import {
+    ElButton,
+    ElContainer,
+    ElMenu,
+    ElAside,
+    ElSubmenu,
+    ElMenuItemGroup,
+    ElMenuItem,
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElCheckbox,
+    ElPopover,
+    ElTag,
+    ElCard,
+    ElTable,
+    ElTableColumn,
+    ElUpload,
+    ElDialog,
+    ElPagination,
+    ElPopconfirm,
+} from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css';
 const app = createApp(App)
 
@@ -25,4 +46,13 @@ app.use(ElButton)
     .use(ElFormItem)
     .use(ElInput)
     .use(ElCheckbox)
+    .use(ElPopover)
+    .use(ElTag)
+    .use(ElCard)
+    .use(ElTable)
+    .use(ElTableColumn)
+    .use(ElUpload)
+    .use(ElDialog)
+    .use(ElPagination)
+    .use(ElPopconfirm)
 app.mount('#app')
