@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <div class="left">
+      <i v-if="hasBack" class="el-icon-back" @click="back"></i>
       <span style="font-size: 20px">{{ name }}</span>
     </div>
     <el-popover
@@ -37,6 +38,7 @@ export default {
     const state = reactive({
       name: 'dashboard',
       userInfo: null, // 用户信息变量
+      hasBack: false, // 是否展示返回icon
     })
 
     onMounted(() => {
@@ -65,11 +67,19 @@ export default {
     router.afterEach((to) => {
       const { id } = to.query
       state.name = pathMap[to.name]
+      // level2 和 level3 需要展示返回icon
+      state.hasBack = ['level2', 'level3'].includes(to.name)
     })
+
+    // 返回方法
+    const back = () => {
+      router.back()
+    }
 
     return {
       ...toRefs(state),
-      logout
+      logout,
+      back
     }
   }
 }
