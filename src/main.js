@@ -31,10 +31,10 @@ const app = createApp(App)
 
 const win = window //
 if (process.env.NODE_ENV === 'development') {
-    if ('__VUE_DEVTOOLS_GLOBAL_HOOK__' in win) {
-        // 这里__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue赋值一个createApp实例
-        win.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app
-    }
+    // if ('__VUE_DEVTOOLS_GLOBAL_HOOK__' in window) {
+    // window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app
+    // }
+    app.config.devtools = true
 }
 
 app.config.globalProperties.$filters = {
@@ -50,6 +50,7 @@ app.config.globalProperties.$filters = {
     }
 }
 
+// 拿到 main 的 DOM 节点，设置它的 scrollTop 值为 0，让其滚动条滚回顶部。我们来这是一个全局公用方法如下所示：
 app.config.globalProperties.goTop = function () {
     const main = document.querySelector('.main')
     main.scrollTop = 0

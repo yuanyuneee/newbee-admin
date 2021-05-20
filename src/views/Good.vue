@@ -85,6 +85,7 @@ import { getCurrentInstance } from 'vue'
 export default {
   name: 'Good', // 养成好习惯，每次新建页面，都要对 name 进行语义化的编辑，对代码的整洁度很有帮助。
   setup() {
+    const app = getCurrentInstance()
     const router = useRouter() // 获取路由实例，内涵路由相关的各种方法。
     const state = reactive({
       loading: false, // 列表数据接口返回前的 loadinig
