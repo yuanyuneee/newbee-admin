@@ -25,6 +25,8 @@ import {
     ElCascader,
     ElRadioGroup,
     ElRadio,
+    ElSelect,
+    ElOption
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css';
 const app = createApp(App)
@@ -37,7 +39,21 @@ if (process.env.NODE_ENV === 'development') {
     app.config.devtools = true
 }
 
+const orderStatus = {
+    0: '待支付',
+    1: '已支付',
+    2: '配货完成',
+    3: '出库成功',
+    4: '交易成功',
+    '-1': '手动关闭',
+    '-2': '超时关闭',
+    '-3': '商家关闭'
+}
+
 app.config.globalProperties.$filters = {
+    orderMap(status) {
+        return orderStatus[status] || '未知状态'
+    },
     prefix(url) {
         if (url && url.startsWith('http')) {
             // 当 url 以 http 开头时候，我们返回原路径
@@ -80,4 +96,6 @@ app.use(ElButton)
     .use(ElCascader)
     .use(ElRadioGroup)
     .use(ElRadio)
+    .use(ElSelect)
+    .use(ElOption)
 app.mount('#app')
